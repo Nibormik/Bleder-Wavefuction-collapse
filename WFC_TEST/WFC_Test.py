@@ -49,8 +49,8 @@ class Cell:
 def draw_pixel(img,pos_X,pos_Y,size):
     posX = pos_X * size
     posY = pos_Y * size
-    for x in range(0,size-1):
-        for y in range(0,size-1):
+    for x in range(0,size):
+        for y in range(0,size):
             colors = grid[pos_X][pos_Y].cell[0]["color"]
             img[posX+x,posY+y] = tuple(colors[x][y])
 
@@ -94,6 +94,6 @@ while not collapsed:
 for x,v in enumerate(grid):
     for y,V in enumerate(v):
         draw_pixel(Wave_cells,x,y,3)
-Wave.save("wave.jpg")
+Wave.save("wave.png")
 
 
