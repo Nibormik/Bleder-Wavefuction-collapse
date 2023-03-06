@@ -1,7 +1,7 @@
 import json,random
 from PIL import Image
-Size_x = 10
-Size_Y = 10
+Size_x = 256
+Size_Y = 256
 
 class Cell:
     def __init__(self,Cells):
