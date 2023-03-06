@@ -6,10 +6,29 @@ class cell:
         self.pos = pos
         self.Cell_list = Cell_list
         self.Cell = Cell_list[0]
+
+    def update(self,Acells):
+        
+    def get_adjacent(self,size,grid):
+        size_x ,size_y = size
+        Acells = []
+        x,y = self.pos
+        Apos_list = [(x+1,y),(x,y+1),(x-1,y),(x,y-1)]
+        for Apos in Apos_list:
+            x,y = Apos
+            if x > size_x-1 or  x < 0:
+                Acells.append(None)
+                continue
+            if y > size_y-1 or  y < 0:
+                Acells.append(None)
+                continue
+            Acells.append(grid[x][y])
+        return Acells
     
 class grid:
     def __init__(self,file,size) -> None:
         self.cell_grid = []
+        self.size = size
         with open(file, 'r') as Cell_list_f:
             Cell_list = json.load(Cell_list_f)
 
