@@ -95,5 +95,3 @@ for x,v in enumerate(grid):
     for y,V in enumerate(v):
         draw_pixel(Wave_cells,x,y,3)
 Wave.save("wave.png")
-
-
