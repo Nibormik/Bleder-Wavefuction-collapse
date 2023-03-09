@@ -1,7 +1,7 @@
 import json,random
 from PIL import Image
-Size_x = 32
-Size_Y = 32
+Size_x = 10
+Size_Y = 10
 
 class Cell:
     def __init__(self,Cells):
@@ -52,9 +52,9 @@ def draw_pixel(img,pos_X,pos_Y,size):
     for x in range(0,size):
         for y in range(0,size):
             colors = grid[pos_X][pos_Y].cell[0]["color"]
-            img[posX+x,posY+y] = tuple(colors[x][y])
+            img[posX+x,posY+y] = tuple(colors[y][x])
 
-with open('./Cells.json', 'r') as Cellsf:
+with open('./Cells old.json', 'r') as Cellsf:
     Cells = json.load(Cellsf)
 
 collapsed = False
