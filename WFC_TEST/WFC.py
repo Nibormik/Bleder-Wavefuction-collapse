@@ -1,7 +1,5 @@
 import json
 import random
-from PIL import Image
-import os
 
 class cell:
     def __init__(self,Cell_list,pos):
@@ -58,7 +56,7 @@ class grid:
         with open(file, 'r') as Cell_list_f:
             Cell_list = json.load(Cell_list_f)
 
-        if type(size) == "tuple": self.size = size
+        if str(type(size)) == "<class 'tuple'>": self.size = size
         else: self.size = (size,size)
         sizex,sizey = self.size
 
@@ -97,52 +95,21 @@ class grid:
                     if v == None:
                         continue
                     self.update_chain.insert(0,v)
-
-
-def draw_pixel(img,pos_X,pos_Y,size):
-    posX = pos_X * size
-    posY = pos_Y * size
-    for x in range(0,size):
-        for y in range(0,size):
-            colors = WFC.cell_grid[pos_X][pos_Y].Cell["color"]
-            img[posX+x,posY-y+2] = tuple(colors[x][y])
-
-print("Generating Grid")
-collapsed = False
-WFC = grid('./Cells2.json',32)
-
-Wave = Image.new("RGB",(WFC.size[0]*3,WFC.size[0]*3),(0))
-Wave_cells = Wave.load()
-
-iterations = 0
-
-print("Starting Cell Collapsing")
-while not collapsed:
-    iterations += 1
-    Random_cell = []
-    for x in WFC.cell_grid:
-        for C in x:
-            if C.Cell:
-                continue
-            if not len(Random_cell):
-                Random_cell.append(C)
-            else:
-                if len(C.Cell_list) < len(Random_cell[0].Cell_list):
-                    Random_cell = [C]
-                if len(C.Cell_list) == len(Random_cell[0].Cell_list):
-                    Random_cell.append(C)  
-    if len(Random_cell):
-        WFC.collapse(Random_cell)
-    else:
-        collapsed = True
-    os.system("cls")
-    print("Collapsing Cells")
-    print(f"Iterations {iterations}")
-
-print("Generating image")
-
-for x,v in enumerate(WFC.cell_grid):
-    for y,V in enumerate(v):
-        draw_pixel(Wave_cells,x,y,3)
-Wave.save("wave.png")
-print("done")
+    def tick(self):
+        Random_cell = []
+        for x in self.cell_grid:
+            for C in x:
+                if C.Cell:
+                    continue
+                if not len(Random_cell):
+                    Random_cell.append(C)
+                else:
+                    if len(C.Cell_list) < len(Random_cell[0].Cell_list):
+                        Random_cell = [C]
+                    if len(C.Cell_list) == len(Random_cell[0].Cell_list):
+                        Random_cell.append(C)  
+        if len(Random_cell):
+            self.collapse(Random_cell)
+            return False
+        else:
+            return True

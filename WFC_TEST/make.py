@@ -15,7 +15,7 @@ def color(Key):
         return [233,180,78]
     if int(Key) == 5:
         return [102,65,71]
-cell_types = itertools.permutations("1111222233334444",4)
+cell_types = itertools.permutations("1234",4)
 cell_types = set(cell_types)
 for i,l in enumerate(list(cell_types)):
     Cells.append({  "Name":str(i),
@@ -26,6 +26,6 @@ for i,l in enumerate(list(cell_types)):
                         [color(5),color(l[2]),color(5)]
                         ]})
 print(len(cell_types))
-with open("Cells2.json", "w") as outfile:
+with open("Cells3.json", "w") as outfile:
     json.dump(Cells, outfile,indent = 4)
     
