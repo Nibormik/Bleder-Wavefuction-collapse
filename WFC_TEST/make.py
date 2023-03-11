@@ -15,7 +15,7 @@ def color(Key):
         return [233,180,78]
     if int(Key) == 5:
         return [102,65,71]
-cell_types = itertools.permutations("1234",4)
+cell_types = itertools.permutations("22221111",4)
 cell_types = set(cell_types)
 for i,l in enumerate(list(cell_types)):
     Cells.append({  "Name":str(i),
