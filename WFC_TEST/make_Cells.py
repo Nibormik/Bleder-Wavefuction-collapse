@@ -2,14 +2,12 @@ import json
 Cells = []
 while True:
     Name = input("Name: ")
-    N = eval(input("N: "))
-    S = eval(input("S: "))
-    E = eval(input("E: "))
-    W = eval(input("W: "))
-    Mesh = None
+    Image = input("Type Image name: ")
     Cells.append({  "Name":Name,
-                    "key":[N,E,S,W]})
+                    "key":list(Name),
+                    "image":"./Tiles/"+Image+".png"})
+    
     if input("add another cell?: ")=="n":
         break
-with open("Cells.json", "w") as outfile:
+with open("Cells_image.json", "w") as outfile:
     json.dump(Cells, outfile,indent = 4)

@@ -7,9 +7,9 @@ from WFC import *
 
 pygame.init()
 
-SIZE = (32,32)
-CELL_SET = "./Cells3.json"
-CELL_SIZE = 3
+SIZE = (8,8)
+CELL_SET = "./Cells_image.json"
+CELL_SIZE = 15
 DISPLAY_SIZE = (SIZE[0]*CELL_SIZE,SIZE[1]*CELL_SIZE)
 flags= []
 DISPLAY = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
@@ -32,7 +32,14 @@ def draw_pixel(pos_X,pos_Y,size):
                 DISPLAY.set_at((posX+x,posY-y+2), tuple(colors[x][y]))
             else:
                 DISPLAY.set_at((posX+x,posY-y+2), (0,0,0))
-
+def draw_image(pos_X,pos_Y,size):
+    posX = pos_X * size
+    posY = pos_Y * size
+    if WFC.cell_grid[pos_X][pos_Y].Cell:
+        imp = pygame.image.load(WFC.cell_grid[pos_X][pos_Y].Cell["image"]).convert()
+        imp = pygame.transform.rotate(imp,90)
+        DISPLAY.blit(imp, (posX, posY))
+            
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -47,7 +54,7 @@ while True:
         print(f"Iterations {ITER}")
 
     for x,v in enumerate(WFC.cell_grid):
-        for y,V in enumerate(v):
-            draw_pixel(x,y,CELL_SIZE)
+        for y,v in enumerate(v):
+            draw_image(x,y,CELL_SIZE)
         
     pygame.display.update()
