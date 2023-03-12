@@ -7,13 +7,14 @@ from WFC import *
 
 pygame.init()
 
-SIZE = (8,8)
+SIZE = (16,16)
 CELL_SET = "./Cells_image.json"
 CELL_SIZE = 15
 DISPLAY_SIZE = (SIZE[0]*CELL_SIZE,SIZE[1]*CELL_SIZE)
 flags= []
 DISPLAY = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
-
+DRAW_SURFACE = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
+DRAW_SURFACE = pygame.transform.rotate(DRAW_SURFACE,90)
 DONE = False
 ITER = 0
 
@@ -38,7 +39,7 @@ def draw_image(pos_X,pos_Y,size):
     if WFC.cell_grid[pos_X][pos_Y].Cell:
         imp = pygame.image.load(WFC.cell_grid[pos_X][pos_Y].Cell["image"]).convert()
         imp = pygame.transform.rotate(imp,90)
-        DISPLAY.blit(imp, (posX, posY))
+        DRAW_SURFACE.blit(imp, (posX, posY))
             
 while True:
     for event in pygame.event.get():
@@ -56,5 +57,6 @@ while True:
     for x,v in enumerate(WFC.cell_grid):
         for y,v in enumerate(v):
             draw_image(x,y,CELL_SIZE)
-        
+
+    DISPLAY.blit(pygame.transform.rotate(DRAW_SURFACE,-90),(0,0))
     pygame.display.update()
