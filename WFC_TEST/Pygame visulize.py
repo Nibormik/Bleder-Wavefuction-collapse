@@ -7,10 +7,10 @@ from WFC import *
 
 pygame.init()
 
-SIZE = (16,16)
+SIZE = (40,64)
 CELL_SET = "./Cells_image.json"
 CELL_SIZE = 15
-DISPLAY_SIZE = (SIZE[0]*CELL_SIZE,SIZE[1]*CELL_SIZE)
+DISPLAY_SIZE = (SIZE[1]*CELL_SIZE,SIZE[0]*CELL_SIZE)
 flags= []
 DISPLAY = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
 DRAW_SURFACE = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
@@ -31,8 +31,7 @@ def draw_pixel(pos_X,pos_Y,size):
             if WFC.cell_grid[pos_X][pos_Y].Cell:
                 colors = WFC.cell_grid[pos_X][pos_Y].Cell["color"]
                 DISPLAY.set_at((posX+x,posY-y+2), tuple(colors[x][y]))
-            else:
-                DISPLAY.set_at((posX+x,posY-y+2), (0,0,0))
+
 def draw_image(pos_X,pos_Y,size):
     posX = pos_X * size
     posY = pos_Y * size
@@ -53,6 +52,10 @@ while True:
         os.system("cls")
         print("Collapsing Cells")
         print(f"Iterations {ITER}")
+    else:
+        pygame.image.save(DISPLAY,'Output.png')
+        pygame.quit()
+        sys.exit()
 
     for x,v in enumerate(WFC.cell_grid):
         for y,v in enumerate(v):
