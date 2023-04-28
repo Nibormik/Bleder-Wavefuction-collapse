@@ -8,7 +8,7 @@ from WFC import *
 
 pygame.init()
 
-SIZE = (32,64)
+SIZE = (256,256)
 CELL_SET = "./Cells_image.json"
 CELL_SIZE = 15
 DISPLAY_SIZE = (SIZE[1]*CELL_SIZE,SIZE[0]*CELL_SIZE)
@@ -64,7 +64,7 @@ while True:
     else:
         if not SAVED:
             pygame.image.save(DISPLAY,'Output.png')
-    if time.monotonic() - draw > 1:
+    if time.monotonic() - draw > 5:
 
         for x,v in enumerate(WFC.cell_grid):
             for y,v in enumerate(v):
@@ -82,5 +82,5 @@ while True:
 
         os.system("cls")
         print("Collapsing Cells")
-        print(f"Iterations: {ITER}, Iterations p/s: {it_psec} ,Iteration time: {Tick_speed}")
+        print(f"Iterations: {ITER}, Iterations p/s: {it_psec/5} ,Iteration time: {Tick_speed}")
         print(f"Cells left: {cells_left}, Tot time {time.monotonic()-tot_time}")
