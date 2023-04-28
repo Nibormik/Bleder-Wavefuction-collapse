@@ -1,2 +1,2 @@
-# WIP Blender Building geneeratins
-simple imlimentation of the Wafe function collapse algorythm to generate buildings
+# WIP Blender Building generation
+simple implimentation of the Wave function collapse algorithm to generate buildings
