@@ -78,7 +78,8 @@ class grid:
         return out
     def collapse(self,RCell_list):
         SCell = RCell_list[random.randint(0,len(RCell_list)-1)]
-        SCell.Cell = SCell.Cell_list[random.randint(0,len(SCell.Cell_list)-1)]
+        SCell_weight = [int(v["weight"]) for v in SCell.Cell_list]
+        SCell.Cell = random.choices(SCell.Cell_list,weights=SCell_weight,k=1)[0]
         SCell.Cell_list = [SCell.Cell]
         Start = SCell.get_adjacent(self.size,self.cell_grid)
 
