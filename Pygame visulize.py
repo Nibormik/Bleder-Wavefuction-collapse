@@ -3,12 +3,12 @@ from pygame.locals import *
 import sys
 import os
 import time
+import json
 
 from WFC import *
 
 
 SIZE = (32,32)
-CELL_SET = "./Cells_image.json"
 CELL_SIZE = 15
 DISPLAY_SIZE = (SIZE[1]*CELL_SIZE,SIZE[0]*CELL_SIZE)
 flags= []
@@ -19,9 +19,13 @@ iterate = 0
 it_psec = 0
 draw = 0
 
-print(str(type(SIZE)))
+CELL_LOC = "./Cells_image.json"
+with open("./Cells.json", 'r') as Cell_list_f:
+    CELL_SET = json.load(Cell_list_f)
+CELL_SET = cell_layout
+
 print("Generating Grid")
-WFC = grid(CELL_SET,SIZE)
+WFC = Grid(10,10,cells=CELL_SET)
 
 
 def draw_pixel(pos_X,pos_Y,size):
@@ -50,7 +54,7 @@ while not DONE:
     DONE = WFC.tick()
     Tick_speed = time.monotonic() - Tick_speed
 
-    if time.monotonic() - draw > 1:
+    if time.monotonic() - draw > 0.1:
         draw = time.monotonic()
 
         it_psec = ITER - iterate
@@ -60,6 +64,12 @@ while not DONE:
         print("Collapsing Cells")
         print(f"Iterations: {ITER}, Iterations p/s: {it_psec} ,Iteration time: {Tick_speed}")
         print(f"Cells left: {cells_left}, Tot time {time.monotonic()-tot_time}")
+
+
+os.system("cls")
+print("Collapsing Cells")
+print(f"Iterations: {ITER}, Iterations p/s: {it_psec} ,Iteration time: {Tick_speed}")
+print(f"Cells left: {cells_left}, Tot time {time.monotonic()-tot_time}")
 
 pygame.init()
 DISPLAY = pygame.display.set_mode(DISPLAY_SIZE,pygame.SCALED)
@@ -71,11 +81,8 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    for x,v in enumerate(WFC.cell_grid):
-            for y,v in enumerate(v):
-                if v.Cell == None:
-                    cells_left += 1
-                draw_image(x,y,CELL_SIZE)
+    for i,v in enumerate(WFC.grid):
+        draw_image(i,CELL_SIZE)
     DISPLAY.blit(pygame.transform.rotate(DRAW_SURFACE,-90),(0,0))
     pygame.display.update()
     if not SAVED:
